@@ -1,0 +1,580 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="FormulaTicketsDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="telefono_1" Type="varchar" MaxLength="20" />
+          <Property Name="telefono_2" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Detalle_Ticket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_ticket" Type="int" Nullable="false" />
+          <Property Name="id_inventario" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Direccion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_cliente" Type="int" Nullable="false" />
+          <Property Name="provincia" Type="varchar" MaxLength="50" />
+          <Property Name="ciudad" Type="varchar" MaxLength="50" />
+          <Property Name="zip" Type="varchar" MaxLength="20" />
+          <Property Name="calle" Type="text" />
+        </EntityType>
+        <EntityType Name="Inventario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_producto" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="categoria" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="especificacion_tecnica" Type="varchar" MaxLength="50" />
+          <Property Name="stock" Type="int" />
+          <Property Name="precio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_vehiculo" Type="int" Nullable="false" />
+          <Property Name="estado" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fecha_creacion" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Updates">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_ticket" Type="int" Nullable="false" />
+          <Property Name="fecha" Type="datetime" />
+          <Property Name="titulo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="descripcion" Type="text" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Vehiculo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_cliente" Type="int" Nullable="false" />
+          <Property Name="id_vehiculospecs" Type="int" Nullable="false" />
+          <Property Name="placa" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="kilometraje" Type="int" />
+        </EntityType>
+        <EntityType Name="VehiculoSpecs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="marca" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="modelo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="anio" Type="int" Nullable="false" />
+          <Property Name="viscosidad_aceite_requerida" Type="varchar" MaxLength="50" />
+          <Property Name="medida_llanta_requerida" Type="varchar" MaxLength="50" />
+          <Property Name="tipo_filtro_requerido" Type="varchar" MaxLength="50" />
+          <Property Name="modelo_caliper_requerido" Type="varchar" MaxLength="50" />
+          <Property Name="modelo_pastilla_requerido" Type="varchar" MaxLength="50" />
+          <Property Name="medida_aro_requerida" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="fk_detalle_inventario">
+          <End Role="Inventario" Type="Self.Inventario" Multiplicity="1" />
+          <End Role="Detalle_Ticket" Type="Self.Detalle_Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Detalle_Ticket">
+              <PropertyRef Name="id_inventario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_detalle_ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Detalle_Ticket" Type="Self.Detalle_Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Detalle_Ticket">
+              <PropertyRef Name="id_ticket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_direccion_cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Direccion" Type="Self.Direccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Direccion">
+              <PropertyRef Name="id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ticket_vehiculo">
+          <End Role="Vehiculo" Type="Self.Vehiculo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehiculo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="id_vehiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_updates_ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Updates" Type="Self.Updates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Updates">
+              <PropertyRef Name="id_ticket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_vehiculo_cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Vehiculo" Type="Self.Vehiculo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Vehiculo">
+              <PropertyRef Name="id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_vehiculo_specs">
+          <End Role="VehiculoSpecs" Type="Self.VehiculoSpecs" Multiplicity="1" />
+          <End Role="Vehiculo" Type="Self.Vehiculo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VehiculoSpecs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Vehiculo">
+              <PropertyRef Name="id_vehiculospecs" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FormulaTicketsDBModelStoreContainer">
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Detalle_Ticket" EntityType="Self.Detalle_Ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Direccion" EntityType="Self.Direccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Inventario" EntityType="Self.Inventario" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Updates" EntityType="Self.Updates" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Vehiculo" EntityType="Self.Vehiculo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="VehiculoSpecs" EntityType="Self.VehiculoSpecs" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_detalle_inventario" Association="Self.fk_detalle_inventario">
+            <End Role="Inventario" EntitySet="Inventario" />
+            <End Role="Detalle_Ticket" EntitySet="Detalle_Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="fk_detalle_ticket" Association="Self.fk_detalle_ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Detalle_Ticket" EntitySet="Detalle_Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="fk_direccion_cliente" Association="Self.fk_direccion_cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Direccion" EntitySet="Direccion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ticket_vehiculo" Association="Self.fk_ticket_vehiculo">
+            <End Role="Vehiculo" EntitySet="Vehiculo" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="fk_updates_ticket" Association="Self.fk_updates_ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Updates" EntitySet="Updates" />
+          </AssociationSet>
+          <AssociationSet Name="fk_vehiculo_cliente" Association="Self.fk_vehiculo_cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Vehiculo" EntitySet="Vehiculo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_vehiculo_specs" Association="Self.fk_vehiculo_specs">
+            <End Role="VehiculoSpecs" EntitySet="VehiculoSpecs" />
+            <End Role="Vehiculo" EntitySet="Vehiculo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="FormulaTicketsDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Cliente">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="telefono_1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="telefono_2" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Direccion" Relationship="Self.fk_direccion_cliente" FromRole="Cliente" ToRole="Direccion" />
+          <NavigationProperty Name="Vehiculo" Relationship="Self.fk_vehiculo_cliente" FromRole="Cliente" ToRole="Vehiculo" />
+        </EntityType>
+        <EntityType Name="Detalle_Ticket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_ticket" Type="Int32" Nullable="false" />
+          <Property Name="id_inventario" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Inventario" Relationship="Self.fk_detalle_inventario" FromRole="Detalle_Ticket" ToRole="Inventario" />
+          <NavigationProperty Name="Ticket" Relationship="Self.fk_detalle_ticket" FromRole="Detalle_Ticket" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Direccion">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_cliente" Type="Int32" Nullable="false" />
+          <Property Name="provincia" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ciudad" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="zip" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="calle" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Cliente" Relationship="Self.fk_direccion_cliente" FromRole="Direccion" ToRole="Cliente" />
+        </EntityType>
+        <EntityType Name="Inventario">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_producto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="categoria" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="especificacion_tecnica" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="stock" Type="Int32" />
+          <Property Name="precio" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="Detalle_Ticket" Relationship="Self.fk_detalle_inventario" FromRole="Inventario" ToRole="Detalle_Ticket" />
+        </EntityType>
+        <EntityType Name="Ticket">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_vehiculo" Type="Int32" Nullable="false" />
+          <Property Name="estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_creacion" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Detalle_Ticket" Relationship="Self.fk_detalle_ticket" FromRole="Ticket" ToRole="Detalle_Ticket" />
+          <NavigationProperty Name="Vehiculo" Relationship="Self.fk_ticket_vehiculo" FromRole="Ticket" ToRole="Vehiculo" />
+          <NavigationProperty Name="Updates" Relationship="Self.fk_updates_ticket" FromRole="Ticket" ToRole="Updates" />
+        </EntityType>
+        <EntityType Name="Updates">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_ticket" Type="Int32" Nullable="false" />
+          <Property Name="fecha" Type="DateTime" Precision="3" />
+          <Property Name="titulo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="descripcion" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Ticket" Relationship="Self.fk_updates_ticket" FromRole="Updates" ToRole="Ticket" />
+        </EntityType>
+        <EntityType Name="Vehiculo">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_cliente" Type="Int32" Nullable="false" />
+          <Property Name="id_vehiculospecs" Type="Int32" Nullable="false" />
+          <Property Name="placa" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="kilometraje" Type="Int32" />
+          <NavigationProperty Name="Cliente" Relationship="Self.fk_vehiculo_cliente" FromRole="Vehiculo" ToRole="Cliente" />
+          <NavigationProperty Name="Ticket" Relationship="Self.fk_ticket_vehiculo" FromRole="Vehiculo" ToRole="Ticket" />
+          <NavigationProperty Name="VehiculoSpecs" Relationship="Self.fk_vehiculo_specs" FromRole="Vehiculo" ToRole="VehiculoSpecs" />
+        </EntityType>
+        <EntityType Name="VehiculoSpecs">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="marca" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="modelo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="anio" Type="Int32" Nullable="false" />
+          <Property Name="viscosidad_aceite_requerida" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="medida_llanta_requerida" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="tipo_filtro_requerido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="modelo_caliper_requerido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="modelo_pastilla_requerido" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="medida_aro_requerida" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Vehiculo" Relationship="Self.fk_vehiculo_specs" FromRole="VehiculoSpecs" ToRole="Vehiculo" />
+        </EntityType>
+        <Association Name="fk_direccion_cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Direccion" Type="Self.Direccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Direccion">
+              <PropertyRef Name="id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_vehiculo_cliente">
+          <End Role="Cliente" Type="Self.Cliente" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Vehiculo" Type="Self.Vehiculo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Cliente">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Vehiculo">
+              <PropertyRef Name="id_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_detalle_inventario">
+          <End Role="Inventario" Type="Self.Inventario" Multiplicity="1" />
+          <End Role="Detalle_Ticket" Type="Self.Detalle_Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Inventario">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Detalle_Ticket">
+              <PropertyRef Name="id_inventario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_detalle_ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Detalle_Ticket" Type="Self.Detalle_Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Detalle_Ticket">
+              <PropertyRef Name="id_ticket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_ticket_vehiculo">
+          <End Role="Vehiculo" Type="Self.Vehiculo" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vehiculo">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Ticket">
+              <PropertyRef Name="id_vehiculo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_updates_ticket">
+          <End Role="Ticket" Type="Self.Ticket" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="Updates" Type="Self.Updates" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ticket">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Updates">
+              <PropertyRef Name="id_ticket" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_vehiculo_specs">
+          <End Role="VehiculoSpecs" Type="Self.VehiculoSpecs" Multiplicity="1" />
+          <End Role="Vehiculo" Type="Self.Vehiculo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="VehiculoSpecs">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="Vehiculo">
+              <PropertyRef Name="id_vehiculospecs" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="FormulaTicketsDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Cliente" EntityType="Self.Cliente" />
+          <EntitySet Name="Detalle_Ticket" EntityType="Self.Detalle_Ticket" />
+          <EntitySet Name="Direccion" EntityType="Self.Direccion" />
+          <EntitySet Name="Inventario" EntityType="Self.Inventario" />
+          <EntitySet Name="Ticket" EntityType="Self.Ticket" />
+          <EntitySet Name="Updates" EntityType="Self.Updates" />
+          <EntitySet Name="Vehiculo" EntityType="Self.Vehiculo" />
+          <EntitySet Name="VehiculoSpecs" EntityType="Self.VehiculoSpecs" />
+          <AssociationSet Name="fk_direccion_cliente" Association="Self.fk_direccion_cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Direccion" EntitySet="Direccion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_vehiculo_cliente" Association="Self.fk_vehiculo_cliente">
+            <End Role="Cliente" EntitySet="Cliente" />
+            <End Role="Vehiculo" EntitySet="Vehiculo" />
+          </AssociationSet>
+          <AssociationSet Name="fk_detalle_inventario" Association="Self.fk_detalle_inventario">
+            <End Role="Inventario" EntitySet="Inventario" />
+            <End Role="Detalle_Ticket" EntitySet="Detalle_Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="fk_detalle_ticket" Association="Self.fk_detalle_ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Detalle_Ticket" EntitySet="Detalle_Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="fk_ticket_vehiculo" Association="Self.fk_ticket_vehiculo">
+            <End Role="Vehiculo" EntitySet="Vehiculo" />
+            <End Role="Ticket" EntitySet="Ticket" />
+          </AssociationSet>
+          <AssociationSet Name="fk_updates_ticket" Association="Self.fk_updates_ticket">
+            <End Role="Ticket" EntitySet="Ticket" />
+            <End Role="Updates" EntitySet="Updates" />
+          </AssociationSet>
+          <AssociationSet Name="fk_vehiculo_specs" Association="Self.fk_vehiculo_specs">
+            <End Role="VehiculoSpecs" EntitySet="VehiculoSpecs" />
+            <End Role="Vehiculo" EntitySet="Vehiculo" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="FormulaTicketsDBModelStoreContainer" CdmEntityContainer="FormulaTicketsDBEntities">
+          <EntitySetMapping Name="Cliente">
+            <EntityTypeMapping TypeName="FormulaTicketsDBModel.Cliente">
+              <MappingFragment StoreEntitySet="Cliente">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="telefono_1" ColumnName="telefono_1" />
+                <ScalarProperty Name="telefono_2" ColumnName="telefono_2" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Detalle_Ticket">
+            <EntityTypeMapping TypeName="FormulaTicketsDBModel.Detalle_Ticket">
+              <MappingFragment StoreEntitySet="Detalle_Ticket">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_ticket" ColumnName="id_ticket" />
+                <ScalarProperty Name="id_inventario" ColumnName="id_inventario" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Direccion">
+            <EntityTypeMapping TypeName="FormulaTicketsDBModel.Direccion">
+              <MappingFragment StoreEntitySet="Direccion">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+                <ScalarProperty Name="provincia" ColumnName="provincia" />
+                <ScalarProperty Name="ciudad" ColumnName="ciudad" />
+                <ScalarProperty Name="zip" ColumnName="zip" />
+                <ScalarProperty Name="calle" ColumnName="calle" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Inventario">
+            <EntityTypeMapping TypeName="FormulaTicketsDBModel.Inventario">
+              <MappingFragment StoreEntitySet="Inventario">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="nombre_producto" ColumnName="nombre_producto" />
+                <ScalarProperty Name="categoria" ColumnName="categoria" />
+                <ScalarProperty Name="especificacion_tecnica" ColumnName="especificacion_tecnica" />
+                <ScalarProperty Name="stock" ColumnName="stock" />
+                <ScalarProperty Name="precio" ColumnName="precio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ticket">
+            <EntityTypeMapping TypeName="FormulaTicketsDBModel.Ticket">
+              <MappingFragment StoreEntitySet="Ticket">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_vehiculo" ColumnName="id_vehiculo" />
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="fecha_creacion" ColumnName="fecha_creacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Updates">
+            <EntityTypeMapping TypeName="FormulaTicketsDBModel.Updates">
+              <MappingFragment StoreEntitySet="Updates">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_ticket" ColumnName="id_ticket" />
+                <ScalarProperty Name="fecha" ColumnName="fecha" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Vehiculo">
+            <EntityTypeMapping TypeName="FormulaTicketsDBModel.Vehiculo">
+              <MappingFragment StoreEntitySet="Vehiculo">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="id_cliente" ColumnName="id_cliente" />
+                <ScalarProperty Name="id_vehiculospecs" ColumnName="id_vehiculospecs" />
+                <ScalarProperty Name="placa" ColumnName="placa" />
+                <ScalarProperty Name="kilometraje" ColumnName="kilometraje" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="VehiculoSpecs">
+            <EntityTypeMapping TypeName="FormulaTicketsDBModel.VehiculoSpecs">
+              <MappingFragment StoreEntitySet="VehiculoSpecs">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="marca" ColumnName="marca" />
+                <ScalarProperty Name="modelo" ColumnName="modelo" />
+                <ScalarProperty Name="anio" ColumnName="anio" />
+                <ScalarProperty Name="viscosidad_aceite_requerida" ColumnName="viscosidad_aceite_requerida" />
+                <ScalarProperty Name="medida_llanta_requerida" ColumnName="medida_llanta_requerida" />
+                <ScalarProperty Name="tipo_filtro_requerido" ColumnName="tipo_filtro_requerido" />
+                <ScalarProperty Name="modelo_caliper_requerido" ColumnName="modelo_caliper_requerido" />
+                <ScalarProperty Name="modelo_pastilla_requerido" ColumnName="modelo_pastilla_requerido" />
+                <ScalarProperty Name="medida_aro_requerida" ColumnName="medida_aro_requerida" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

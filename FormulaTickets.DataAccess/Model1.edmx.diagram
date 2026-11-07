@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="d2057a2d28964fa2b3ea33d450fcc244" Name="Diagram1" ZoomLevel="68">
+        <EntityTypeShape EntityType="FormulaTicketsDBModel.Cliente" Width="1.5" PointX="0.75" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormulaTicketsDBModel.Detalle_Ticket" Width="1.5" PointX="10.5" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormulaTicketsDBModel.Direccion" Width="1.5" PointX="3" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormulaTicketsDBModel.Inventario" Width="1.5" PointX="8.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormulaTicketsDBModel.Ticket" Width="1.5" PointX="8.25" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormulaTicketsDBModel.Updates" Width="1.5" PointX="10.5" PointY="8.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormulaTicketsDBModel.Vehiculo" Width="1.5" PointX="6" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="FormulaTicketsDBModel.VehiculoSpecs" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="FormulaTicketsDBModel.fk_direccion_cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="FormulaTicketsDBModel.fk_vehiculo_cliente" ManuallyRouted="false" />
+        <AssociationConnector Association="FormulaTicketsDBModel.fk_detalle_inventario" ManuallyRouted="false" />
+        <AssociationConnector Association="FormulaTicketsDBModel.fk_detalle_ticket" ManuallyRouted="false" />
+        <AssociationConnector Association="FormulaTicketsDBModel.fk_ticket_vehiculo" ManuallyRouted="false" />
+        <AssociationConnector Association="FormulaTicketsDBModel.fk_updates_ticket" ManuallyRouted="false" />
+        <AssociationConnector Association="FormulaTicketsDBModel.fk_vehiculo_specs" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
