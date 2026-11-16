@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaTickets.MVC", "Formu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaTickets.DataAccess", "FormulaTickets.DataAccess\FormulaTickets.DataAccess.csproj", "{65C91ED5-A096-41C3-905A-648A95794391}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaTickets.Repositories", "FormulaTickets.Repositories\FormulaTickets.Repositories.csproj", "{A9A78D5D-0B7D-46ED-A5D1-2D8F5D94AE19}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FormulaTickets.Business", "FormulaTickets.Business\FormulaTickets.Business.csproj", "{4C7A55B8-9236-4725-B37E-3DD23B2C7872}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{65C91ED5-A096-41C3-905A-648A95794391}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{65C91ED5-A096-41C3-905A-648A95794391}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{65C91ED5-A096-41C3-905A-648A95794391}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A9A78D5D-0B7D-46ED-A5D1-2D8F5D94AE19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A9A78D5D-0B7D-46ED-A5D1-2D8F5D94AE19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A9A78D5D-0B7D-46ED-A5D1-2D8F5D94AE19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A9A78D5D-0B7D-46ED-A5D1-2D8F5D94AE19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C7A55B8-9236-4725-B37E-3DD23B2C7872}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C7A55B8-9236-4725-B37E-3DD23B2C7872}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C7A55B8-9236-4725-B37E-3DD23B2C7872}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C7A55B8-9236-4725-B37E-3DD23B2C7872}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

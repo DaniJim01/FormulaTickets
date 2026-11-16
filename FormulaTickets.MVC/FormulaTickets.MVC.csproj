@@ -126,9 +126,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\FormulaTickets.Business\FormulaTickets.Business.csproj">
+      <Project>{4C7A55B8-9236-4725-B37E-3DD23B2C7872}</Project>
+      <Name>FormulaTickets.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\FormulaTickets.DataAccess\FormulaTickets.DataAccess.csproj">
       <Project>{65C91ED5-A096-41C3-905A-648A95794391}</Project>
       <Name>FormulaTickets.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FormulaTickets.Repositories\FormulaTickets.Repositories.csproj">
+      <Project>{A9A78D5D-0B7D-46ED-A5D1-2D8F5D94AE19}</Project>
+      <Name>FormulaTickets.Repositories</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

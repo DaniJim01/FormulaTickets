@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using FormulaTickets.DataAccess;
-using FormulaTickets.DataAccess.Repositories;
+using FormulaTickets.Repositories;
 
 namespace FormulaTickets.MVC.Controllers
 {

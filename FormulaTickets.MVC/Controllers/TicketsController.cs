@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using FormulaTickets.Business;
 using FormulaTickets.DataAccess;
-using FormulaTickets.DataAccess.Repositories;
-using FormulaTickets.DataAccess.Services;
 using FormulaTickets.MVC.Models;
+using FormulaTickets.Repositories;
 
 namespace FormulaTickets.MVC.Controllers
 {
